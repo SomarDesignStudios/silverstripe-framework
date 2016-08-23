@@ -157,6 +157,11 @@ class PDOConnector extends DBConnector {
 			$options[PDO::ATTR_EMULATE_PREPARES] = true;
 		}
 
+		// The dblib driver doesn't support setting attributes.
+		if ($parameters['driver'] === 'dblib') {
+			$options = null;
+		}
+
 		// May throw a PDOException if fails
 		$this->pdoConnection = new PDO(
 			$driver.implode(';', $dsn),
